@@ -1,8 +1,27 @@
 
 function solve(){
 	var e = $("#equation").val().replace(" ","");
-	var es = e.split("");
+	/*var es = e.split("");*/
 	var sign = 1;
+
+
+	var es=[];
+	for(var k=0; k<e.length; k++){
+		
+		if(!isNumber(e[k])){
+			es.push(e[k])
+		}
+		else{
+			var start = k;
+			while(isNumber(e[k])){
+				k++
+			}
+			es.push(e.substring(start,k));
+			k-=1;
+		}
+	}
+	console.log(es);
+
 
 	var oneSum = 0;
 	var zeroSum = 0;
@@ -19,20 +38,27 @@ function solve(){
 		
 		if(!isNaN(current)){
 			if(i==0){
-				if(es[i+1]=="x"){
+				if(isLetter(es[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
 				}
 				else{
 					zeroSum+=current*sign;
 				}
-			}//end special test case
+			}
+
+			else if(i==es.length-1){
+				if(es[i-1]=="-"){
+					current*=-1;
+				}
+				zeroSum+=current*sign;
+			}//end special test cases
 
 			else{
 				if(es[i-1]=="-"){
 					current*=-1;
 				}
-
-				if(es[i+1]=="x"){
+				
+				if(isLetter(es[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
 				}
 				else{
@@ -49,8 +75,15 @@ function solve(){
 	console.log(ans);
 }
 
+console.log(isNumber('x'));
 
+function isLetter(code) {
+ 	return ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122));
+}
 
+function isNumber(x){
+	return !isNaN(parseInt(x));
+}
 
 function fraction(x) {
 	var negative = false;
