@@ -44,5 +44,35 @@ function solve(){
 	}//end for
 
 	zeroSum*=-1;
-	alert(zeroSum/oneSum);
+	var ans = zeroSum/oneSum;
+	console.log(ans%1==0?ans:fraction(ans));
+	console.log(ans);
+}
+
+
+
+
+function fraction(x) {
+	var negative = false;
+	if(x<0){
+		negative = true;
+		x=Math.abs(x);
+	}
+    var tolerance = 1.0E-6;
+    var h1=1; 
+    var h2=0;
+    var k1=0; 
+    var k2=1;
+    var b = x;
+    do {
+        var a = Math.floor(b);
+        var aux = h1; h1 = a*h1+h2; h2 = aux;
+        aux = k1; k1 = a*k1+k2; k2 = aux;
+        b = 1/(b-a);
+    } while (Math.abs(x-h1/k1) > x*tolerance);
+    
+    if(negative){
+    	return h1*-1+"/"+k1;
+    }
+    return h1+"/"+k1;
 }
