@@ -28,6 +28,12 @@ function solve(){
 	}
 
 
+	for(var j=0; j<es.length; j++){
+		if(es[j]=="1" && isLetter(es[j+1].charCodeAt(0)) && isNumber(es[j+2])){
+			es[j] = es[j+2];
+			es.splice(j+2,1);
+		}
+	}
 
 
 	var oneSum = 0;
