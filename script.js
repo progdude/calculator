@@ -4,11 +4,17 @@ function solve(){
 	/*var es = e.split("");*/
 	var sign = 1;
 
-
+	e = "+"+e;
 	var es=[];
 	for(var k=0; k<e.length; k++){
 		
 		if(!isNumber(e[k])){
+			if(isLetter(e[k].charCodeAt(0))){
+				if(isOperator(e[k-1])){
+					es.push("1");
+				}
+				
+			}
 			es.push(e[k])
 		}
 		else{
@@ -20,7 +26,8 @@ function solve(){
 			k-=1;
 		}
 	}
-	console.log(es);
+
+
 
 
 	var oneSum = 0;
@@ -75,7 +82,6 @@ function solve(){
 	console.log(ans);
 }
 
-console.log(isNumber('x'));
 
 function isLetter(code) {
  	return ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122));
@@ -83,6 +89,10 @@ function isLetter(code) {
 
 function isNumber(x){
 	return !isNaN(parseInt(x));
+}
+
+function isOperator(x){
+	return x=="/" || x=="+" || x=="-" || x=="*";
 }
 
 function fraction(x) {
