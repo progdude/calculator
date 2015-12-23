@@ -1,7 +1,6 @@
 
 function solve(){
 	var e = $("#equation").val().replace(" ","");
-	/*var es = e.split("");*/
 	var sign = 1;
 
 	e = "+"+e;
@@ -13,10 +12,17 @@ function solve(){
 				if(isOperator(e[k-1])){
 					es.push("1");
 				}
-				
 			}
+
+			else if(e[k]=="("){
+				if(isOperator(e[k-1])){
+					es.push("1");
+				}
+			}
+
 			es.push(e[k])
 		}
+
 		else{
 			var start = k;
 			while(isNumber(e[k])){
@@ -34,6 +40,30 @@ function solve(){
 			es.splice(j+2,1);
 		}
 	}
+
+	console.log(es);
+
+	var eq = [];
+
+	for(var i=0; i<es.length; i++){
+	    if(es[i]=="("){
+
+	        var x = es[i-1];
+	        i++;
+	        while(es[i]!=")"){
+	        	console.log(es[i]);
+	            if(isNumber(es[i])){
+	            	eq.push(x*es[i]);
+	            }
+	            else{
+	            	eq.push(es[i]);
+	            }
+	            i++;
+	        }
+	    }
+	}
+
+	console.log(eq);
 
 
 	var oneSum = 0;
@@ -98,7 +128,7 @@ function isNumber(x){
 }
 
 function isOperator(x){
-	return x=="/" || x=="+" || x=="-" || x=="*";
+	return x=="/" || x=="+" || x=="-" || x=="*" || x=="(";
 }
 
 function fraction(x) {
