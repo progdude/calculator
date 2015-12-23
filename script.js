@@ -47,11 +47,10 @@ function solve(){
 
 	for(var i=0; i<es.length; i++){
 	    if(es[i]=="("){
-
+	    	
 	        var x = es[i-1];
 	        i++;
 	        while(es[i]!=")"){
-	        	console.log(es[i]);
 	            if(isNumber(es[i])){
 	            	eq.push(x*es[i]);
 	            }
@@ -60,6 +59,14 @@ function solve(){
 	            }
 	            i++;
 	        }
+	    }
+	    else{
+	    	if(isNumber(es[i])){
+	    		if(es[i+1]!="("){
+	    			eq.push(es[i]);
+	    		}
+	    	}
+	    	else{eq.push(es[i]);}
 	    }
 	}
 
@@ -71,17 +78,17 @@ function solve(){
 
 	var current;
 
-	for(var i=0; i<es.length; i++){
-		if(es[i]=="="){
+	for(var i=0; i<eq.length; i++){
+		if(eq[i]=="="){
 			sign*=-1;
 			continue;
 		}
 
-		current = parseInt(es[i]);
+		current = parseInt(eq[i]);
 		
 		if(!isNaN(current)){
 			if(i==0){
-				if(isLetter(es[i+1].charCodeAt(0))){
+				if(isLetter(eq[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
 				}
 				else{
@@ -89,19 +96,19 @@ function solve(){
 				}
 			}
 
-			else if(i==es.length-1){
-				if(es[i-1]=="-"){
+			else if(i==eq.length-1){
+				if(eq[i-1]=="-"){
 					current*=-1;
 				}
 				zeroSum+=current*sign;
 			}//end special test cases
 
 			else{
-				if(es[i-1]=="-"){
+				if(eq[i-1]=="-"){
 					current*=-1;
 				}
 				
-				if(isLetter(es[i+1].charCodeAt(0))){
+				if(isLetter(eq[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
 				}
 				else{
