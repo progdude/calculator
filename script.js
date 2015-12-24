@@ -10,8 +10,8 @@ function solve(){
 	//add 1 as coefficient and split into array
 	for(var k=0; k<e.length; k++){
 		//console.log(e[k]);
-		if((!isNumber(e[k])) && e[k]!="."){
-
+		if(!(isNumber(e[k]) || e[k]==".")){
+			console.log(e[k]);
 			if(isLetter(e[k].charCodeAt(0))){
 				if(isOperator(e[k-1])){
 					es.push("1");
@@ -24,16 +24,13 @@ function solve(){
 				}
 			}
 
-			else{
-					var blah = "s";
-				}
-
 			es.push(e[k])
 		}
 
 		else{
+			console.log(k);
 			var start = k;
-			while(isNumber(e[k]) || k=="."){
+			while(isNumber(e[k]) || e[k]=="."){
 				console.log(e[k]);
 				k++
 			}
@@ -106,9 +103,10 @@ function solve(){
 			continue;
 		}
 
-		current = parseInt(eq[i]);
+		current = parseFloat(eq[i]);
 		
 		if(!isNaN(current)){
+			console.log(current);
 			if(i==0){
 				if(isLetter(eq[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
@@ -148,7 +146,7 @@ function solve(){
 
 }
 
-console.log(isNumber("."));
+
 
 
 function isLetter(code) {
