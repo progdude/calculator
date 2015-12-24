@@ -5,9 +5,13 @@ function solve(){
 
 	e = "+"+e;
 	var es=[];
+
+
+	//add 1 as coefficient and split into array
 	for(var k=0; k<e.length; k++){
-		
-		if(!isNumber(e[k])){
+		//console.log(e[k]);
+		if((!isNumber(e[k])) && e[k]!="."){
+
 			if(isLetter(e[k].charCodeAt(0))){
 				if(isOperator(e[k-1])){
 					es.push("1");
@@ -20,12 +24,17 @@ function solve(){
 				}
 			}
 
+			else{
+					var blah = "s";
+				}
+
 			es.push(e[k])
 		}
 
 		else{
 			var start = k;
-			while(isNumber(e[k])){
+			while(isNumber(e[k]) || k=="."){
+				console.log(e[k]);
 				k++
 			}
 			es.push(e.substring(start,k));
@@ -33,10 +42,21 @@ function solve(){
 		}
 	}
 
+	console.log(es);
 
-	for(var j=0; j<es.length; j++){
-		if(es[j]=="1" && isLetter(es[j+1].charCodeAt(0)) && isNumber(es[j+2])){
-			es[j] = es[j+2];
+	//in case any of the coefficients are in the wrong place
+	for(var j=0; j<es.length-1; j++){
+
+		if(es[j]=="/"){
+			es[j]=String((1/parseInt(es[j+1])));   //<-----------------------------------fix this!!!!!!!
+			es.splice(j+1, 1);
+		}
+
+	}
+
+	for(var j=0; j<es.length-1; j++){
+		if(isNumber(es[j]) && isLetter(es[j+1].charCodeAt(0)) && isNumber(es[j+2])){
+			es[j] = es[j]*es[j+2];
 			es.splice(j+2,1);
 		}
 	}
@@ -44,7 +64,7 @@ function solve(){
 	console.log(es);
 
 	var eq = [];
-
+	//accounts for paranthesis
 	for(var i=0; i<es.length; i++){
 	    if(es[i]=="("){
 	    	
@@ -66,7 +86,9 @@ function solve(){
 	    			eq.push(es[i]);
 	    		}
 	    	}
-	    	else{eq.push(es[i]);}
+	    	else{
+	    		eq.push(es[i]);
+	    	}
 	    }
 	}
 
@@ -123,7 +145,10 @@ function solve(){
 	var ans = zeroSum/oneSum;
 	console.log(ans%1==0?ans:fraction(ans));
 	console.log(ans);
+
 }
+
+console.log(isNumber("."));
 
 
 function isLetter(code) {
@@ -161,4 +186,8 @@ function fraction(x) {
     	return h1*-1+"/"+k1;
     }
     return h1+"/"+k1;
+}
+
+function foil(a,b){
+
 }
