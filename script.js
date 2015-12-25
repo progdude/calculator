@@ -9,9 +9,7 @@ function solve(){
 
 	//add 1 as coefficient and split into array
 	for(var k=0; k<e.length; k++){
-		//console.log(e[k]);
 		if(!(isNumber(e[k]) || e[k]==".")){
-			console.log(e[k]);
 			if(isLetter(e[k].charCodeAt(0))){
 				if(isOperator(e[k-1])){
 					es.push("1");
@@ -24,14 +22,12 @@ function solve(){
 				}
 			}
 
-			es.push(e[k])
+			es.push(e[k]);
 		}
 
 		else{
-			console.log(k);
 			var start = k;
 			while(isNumber(e[k]) || e[k]=="."){
-				console.log(e[k]);
 				k++
 			}
 			es.push(e.substring(start,k));
@@ -39,26 +35,47 @@ function solve(){
 		}
 	}
 
-	console.log(es);
 
-	//in case any of the coefficients are in the wrong place
+	
+
+	//account for division signs	
 	for(var j=0; j<es.length-1; j++){
 
 		if(es[j]=="/"){
-			es[j]=String((1/parseInt(es[j+1])));   //<-----------------------------------fix this!!!!!!!
+			es[j]=String((1/parseInt(es[j+1])));   
 			es.splice(j+1, 1);
 		}
 
 	}
 
+	console.log(es);
+	console.log("after division");
+
+
+	var start =0;
+	//in case any of the coefficients are in the wrong place
 	for(var j=0; j<es.length-1; j++){
 		if(isNumber(es[j]) && isLetter(es[j+1].charCodeAt(0)) && isNumber(es[j+2])){
 			es[j] = es[j]*es[j+2];
 			es.splice(j+2,1);
 		}
+
+		if(es[j]=="("){
+			start = j;
+		}
+
+		if(es[j]==")" && isNumber(es[j+1])){
+				es[start-1] = es[start-1]*es[j+1];
+				console.log(es[start-1]);
+				es.splice(j+1,1);
+		}
+
 	}
 
 	console.log(es);
+	console.log("after coefficients");
+
+	
 
 	var eq = [];
 	//accounts for paranthesis
@@ -106,7 +123,6 @@ function solve(){
 		current = parseFloat(eq[i]);
 		
 		if(!isNaN(current)){
-			console.log(current);
 			if(i==0){
 				if(isLetter(eq[i+1].charCodeAt(0))){
 					oneSum+=current*sign;
