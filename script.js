@@ -36,7 +36,7 @@ function solve(){
 	}
 
 
-	
+	console.log(es);
 
 	//account for division signs	
 	for(var j=0; j<es.length-1; j++){
@@ -44,7 +44,14 @@ function solve(){
 		if(es[j]=="/"){
 			es[j]=String((1/parseInt(es[j+1])));   
 			es.splice(j+1, 1);
+			if(isNumber(es[j-1])){
+				es[j-1] = es[j-1]*es[j];
+				es.splice(j,1);
+			}
+			
 		}
+
+
 
 	}
 
@@ -52,7 +59,7 @@ function solve(){
 	console.log("after division");
 
 
-	var start =0;
+	var begin =0;
 	//in case any of the coefficients are in the wrong place
 	for(var j=0; j<es.length-1; j++){
 		if(isNumber(es[j]) && isLetter(es[j+1].charCodeAt(0)) && isNumber(es[j+2])){
@@ -61,12 +68,11 @@ function solve(){
 		}
 
 		if(es[j]=="("){
-			start = j;
+			begin = j;
 		}
 
 		if(es[j]==")" && isNumber(es[j+1])){
-				es[start-1] = es[start-1]*es[j+1];
-				console.log(es[start-1]);
+				es[begin-1] = es[begin-1]*es[j+1];
 				es.splice(j+1,1);
 		}
 
@@ -107,6 +113,15 @@ function solve(){
 	}
 
 	console.log(eq);
+
+	for(var j=0; j<eq.length-1; j++){
+		if(isNumber(eq[j]) && isLetter(eq[j+1].charCodeAt(0)) && isNumber(eq[j+2])){
+			eq[j] = eq[j]*eq[j+2];
+			eq.splice(j+2,1);
+		}
+	}
+
+	
 
 
 	var oneSum = 0;
