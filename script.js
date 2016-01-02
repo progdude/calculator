@@ -1,4 +1,3 @@
-console.log(CQ("(x+5)*(x+6)*(x+7)*(x+2)").simplify().toString());
 
 function solve(){
 	var e = $("#equation").val().replace(" ","");
@@ -8,6 +7,7 @@ function solve(){
 	var unSimply = [];
 
 	
+	//split into first array
 	for(var i=0; i<e.length; i++){
 		if(!(isNumber(e[i]) || e[i]==".")){
 			eq.push(e[i]);
@@ -23,7 +23,11 @@ function solve(){
 		}
 	}
 
+	e = null;
+	//end
 
+
+	//insert exponents and multiplications
 	for(var i=0; i<eq.length; i++){
 		if(i==eq.length-1){
 			unSimply.push(eq[i]);
@@ -71,14 +75,49 @@ function solve(){
 		}
 	}
 
+	eq = null;
+	//end
 
-	var s = "";
+	//simplify!!!!!
+	var s = unSimply.join("");
+	s = CQ(s).simplify().toString();
 
-	for(var i=0; i<unSimply.length; i++){
-		s+=unSimply[i];
-	}
+	var s1="";
 
-	console.log(CQ(s).simplify().toString());
+
+	for (var i = 0; i < s.length; i++) {
+		if(s[i].charCodeAt(0) != 32){
+			s1+=s[i];
+		}
+	};
+
+	s = null;
+	unSimply = null;
+	//end
+
+
+	//split into array again
+	var simply = [];
+
+	for (var i = 0; i < s1.length; i++) {
+		if(!(isNumber(s1[i]) || s1[i]==".")){
+			simply.push(s1[i]);
+		}
+
+		else{
+			var start = i;
+			while(isNumber(s1[i]) || s1[i]=="."){
+				i++
+			}
+			simply.push(s1.substring(start,i));
+			i-=1;
+		}
+	};
+
+	console.log(simply);
+	s1=null;
+	//end
+
 
 }
 
