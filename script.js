@@ -81,7 +81,6 @@ function solve(){
 	//simplify!!!!!
 	var s = unSimply.join("");
 	s = CQ(s).simplify().toString();
-
 	var s1="";
 
 
@@ -90,7 +89,6 @@ function solve(){
 			s1+=s[i];
 		}
 	};
-
 	s = null;
 	unSimply = null;
 	//end
@@ -100,6 +98,12 @@ function solve(){
 	var simply = [];
 
 	for (var i = 0; i < s1.length; i++) {
+
+
+		if(s1[i]=="*"){
+			continue;
+		}
+
 		if(!(isNumber(s1[i]) || s1[i]==".")){
 			simply.push(s1[i]);
 		}
@@ -118,8 +122,85 @@ function solve(){
 	s1=null;
 	//end
 
+		//account for division signs	
+	for(var j=0; j<simply.length-1; j++){
 
+		if(simply[j]=="/"){
+			if(simply[j+1]=="-"){
+				simply.splice(j+1,1);
+				simply[j]=String((1/parseInt(simply[j+1]*-1)));   
+				simply.splice(j+1, 1);
+				if(isNumber(simply[j-1])){
+					simply[j-1] = simply[j-1]*simply[j];
+					simply.splice(j,1);
+				}
+			}
+			else{
+			simply[j]=String((1/parseInt(simply[j+1])));   
+			simply.splice(j+1, 1);
+				if(isNumber(simply[j-1])){
+					simply[j-1] = simply[j-1]*simply[j];
+					simply.splice(j,1);
+				}
+			}
+			
+		}	
+
+
+
+	}//end
+
+	var moreSimply = [];
+	for (var i = 0; i < simply.length; i++) {
+		if(isNumber(simply[i]) && isLetter(simply[i+1].charCodeAt(0)) && isNumber(simply[i+2])){
+
+		}
+	};
+
+	console.log(simply);
+
+	var finalEq = [];
+	for(var i=0; i<simply.length; i++){
+		if(simply[i] == "("){
+
+			if(isNumber(simply[i-1])){
+				var x = simply[i-1];
+				while(simply[i]!=")"){
+			        if(isNumber(simply[i])){
+			            	finalEq.push(x*simply[i]);
+			            }
+		            else{
+		            	finalEq.push(simply[i]);
+		            	}
+		            i++;
+	        	}
+			}
+			else{
+				while(simply[i]!=")"){
+					finalEq.push(simply[i]);
+		            i++;
+	        	}
+			}
+		}
+		else{
+			if(isNumber(simply[i])){
+	    		if(simply[i+1]!="("){
+	    			finalEq.push(simply[i]);
+	    		}
+	    	}
+	    	else{
+	    		finalEq.push(simply[i]);
+	    	}
+		}
+	}
+
+
+	console.log(finalEq);
+	
 }
+
+
+
 
 
 
@@ -129,4 +210,8 @@ function isLetter(x) {
 
 function isNumber(x){
 	return !isNaN(parseInt(x));
+}
+
+function isOperator(x){
+	return x=="/" || x=="+" || x=="-" || x=="*" || x=="(";
 }
