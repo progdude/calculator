@@ -118,7 +118,6 @@ function solve(){
 		}
 	};
 
-	console.log(simply);
 	s1=null;
 	//end
 
@@ -150,11 +149,31 @@ function solve(){
 
 	}//end
 
-	var moreSimply = [];
+
 	for (var i = 0; i < simply.length; i++) {
-		if(isNumber(simply[i]) && isLetter(simply[i+1].charCodeAt(0)) && isNumber(simply[i+2])){
+		if(!(isNumber(simply[i]) || simply[i]==".")){
+			if(isLetter(simply[i].charCodeAt(0))){
+				if(isOperator(simply[i-1])){
+					simply.splice(i,0,1);
+				}
+			}
+
+			else if(simply[i]=="("){
+				if(isOperator(simply[i-1])){
+					simply.splice(i,0,1);
+				}
+			}
 
 		}
+	}
+	console.log(simply);
+
+	/*var moreSimply = [];
+	for (var i = 0; i < simply.length; i++) {
+		if(isNumber(simply[i]) && isLetter(simply[i+1].charCodeAt(0)) && isNumber(simply[i+2])){
+			simply[i] = simply[i]*simply[i+2];
+		}
+
 	};
 
 	console.log(simply);
@@ -195,7 +214,7 @@ function solve(){
 	}
 
 
-	console.log(finalEq);
+	console.log(finalEq);*/
 	
 }
 
