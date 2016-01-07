@@ -1,0 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body{
+	background-color: #fcfcfc;
+}
+
+#title{
+	font-size: 90px;
+	text-align: center;
+	color:#26a69a;
+	font-family: 'Roboto';
+	font-weight: thick;
+	letter-spacing: 5px;
+}
+

@@ -166,6 +166,7 @@ function solve(){
 
 		}
 	}
+
 	console.log(simply);
 	var begin = 0;
 	for (var i = 0; i < simply.length; i++) {
@@ -200,7 +201,6 @@ function solve(){
 		            	}
 		            i++;
 	        	}
-			///////////////////////////////////////////
 			
 		}
 		else{
