@@ -15,8 +15,30 @@ body{
 }
 
 #equation{
-	font-style: italic;
 	color:  #999999;
 	font-family: 'Ubuntu';
 }
 
+.block{
+	height: 10vh;
+	background-color: #f5f2f0;
+	line-height: 10vh;
+	font-family: 'Ubuntu';
+	font-size: 3vh;
+}
+.equ{
+	color:#690;
+	margin-right: 2vw;
+}
+
+.why{
+	color: #07a;
+}
+
+hr{
+	background-color: #26a69a;
+	height: .5vh;
+	width: 83%;
+	margin-right: auto;
+	margin-left: auto;
+}

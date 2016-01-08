@@ -5,10 +5,11 @@
 <script src="jquery.js"></script>
 <script type="text/javascript" src="coffeequate.min.js"></script>
 <script type="text/javascript" src="script.js"></script>
-<link rel="stylesheet" type="text/css" href="style.css">
+
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
@@ -17,13 +18,20 @@
 	<div id="title">Solvr</div>
 
 	      <div class="row">
-        <div class="input-field col s8 offset-s2 ">
-          <input id="equation" type="text" id="equation">
-          <label for="equation" >Insert Equation Here</label>
+          <div class="input-field col s8 offset-s2 ">
+            <input id="equation" type="text" id="equation">
+            <label for="equation" >Insert Equation Here</label>
+          </div>
+          <a class="waves-effect waves-light btn teal lighten-1" onclick="solve()"><i class="material-icons left">lock_open</i>Solve</a>
         </div>
-        <a class="waves-effect waves-light btn teal lighten-1" onclick="solve()"><i class="material-icons left">lock_open</i>Solve</a>
 
-      </div>
+        <!--<div class="row">
+          <div class="col s10 offset-s1 block">
+            <div class="explain"><span class="equ">4x+5</span><span class="why">Whats happening</span></div>
+          </div>
+        </div>
+
+        <hr>-->        
 
 	<!--<input type="text" id="equation">
 	<button onclick="solve()">Solve</button>-->

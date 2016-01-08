@@ -82,7 +82,7 @@ function solve(){
 	var s = unSimply.join("");
 	s = CQ(s).simplify().toString();
 	var s1="";
-
+	console.log(s);
 
 	for (var i = 0; i < s.length; i++) {
 		if(s[i].charCodeAt(0) != 32){
