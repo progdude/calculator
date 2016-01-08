@@ -1,8 +1,6 @@
 
 function solve(){
 	var e = $("#equation").val().replace(" ","");
-	var sign = 1;
-
 	var eq=[]
 	var unSimply = [];
 	var parts = e.split("=");
@@ -86,7 +84,7 @@ function solve(){
 	var s = unSimply.join("");
 	s = CQ(s).simplify().toString();
 	var s1="";
-	
+		
 
 	for (var i = 0; i < s.length; i++) {
 		if(s[i].charCodeAt(0) != 32){
@@ -96,6 +94,9 @@ function solve(){
 	s = null;
 	unSimply = null;
 	//end
+
+	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(s1)+' = 0</span><span class="why">Combine Like Terms</span></div></div></div><hr>');
+
 
 
 	//split into array again
@@ -218,11 +219,66 @@ function solve(){
 	}
 
 
-	
+	linear(finalEq);
 }
 
 
+function linear(eq){
+	var oneSum = 0;
+	var zeroSum = 0;
+	var sign = 1;
+	var current;
 
+	for(var i=0; i<eq.length; i++){
+		if(eq[i]=="="){
+			sign*=-1;
+			continue;
+		}
+
+		current = parseFloat(eq[i]);
+		
+		if(!isNaN(current)){
+			if(i==0){
+				if(isLetter(eq[i+1].charCodeAt(0))){
+					oneSum+=current*sign;
+				}
+				else{
+					zeroSum+=current*sign;
+				}
+			}
+
+			else if(i==eq.length-1){
+				if(eq[i-1]=="-"){
+					current*=-1;
+				}
+				zeroSum+=current*sign;
+			}//end special test cases
+
+			else{
+				if(eq[i-1]=="-"){
+					current*=-1;
+				}
+				
+				if(isLetter(eq[i+1].charCodeAt(0))){
+					oneSum+=current*sign;
+				}
+				else{
+					zeroSum+=current*sign;
+				}
+
+			}
+		}
+	}//end for
+
+	zeroSum*=-1;
+	var ans = zeroSum/oneSum;
+
+	var frac = ans%1==0?ans:fraction(ans);
+	var decimal = ans;
+
+	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
+
+}
 
 
 
@@ -238,9 +294,34 @@ function isOperator(x){
 	return x=="/" || x=="+" || x=="-" || x=="*" || x=="(";
 }
 
+
+function fraction(x) {
+	var negative = false;
+	if(x<0){
+		negative = true;
+		x=Math.abs(x);
+	}
+    var tolerance = 1.0E-6;
+    var h1=1; 
+    var h2=0;
+    var k1=0; 
+    var k2=1;
+    var b = x;
+    do {
+        var a = Math.floor(b);
+        var aux = h1; h1 = a*h1+h2; h2 = aux;
+        aux = k1; k1 = a*k1+k2; k2 = aux;
+        b = 1/(b-a);
+    } while (Math.abs(x-h1/k1) > x*tolerance);
+    
+    if(negative){
+    	return h1*-1+"/"+k1;
+    }
+    return h1+"/"+k1;
+}
+
+
 function simple(e){
-
-
 
 	var eq=[]
 	var unSimply = [];
@@ -319,9 +400,13 @@ function simple(e){
 	var s = unSimply.join("");
 	s = CQ(s).simplify().toString();
 
-	var result="";
+	return format(s);
 
-	for (var i = 0; i < s.length; i++) {
+}
+
+function format(s){
+	var result="";
+		for (var i = 0; i < s.length; i++) {
 		if(s[i]=="*"){
 			if(s[i+1]=="*"){
 				result+="^";
@@ -335,6 +420,4 @@ function simple(e){
 		}
 	};
 	return result;
-	console.log(result);
-
 }
