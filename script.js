@@ -5,6 +5,9 @@ function solve(){
 
 	var eq=[]
 	var unSimply = [];
+	var parts = e.split("=");
+	simple(parts[0]);
+	simple(parts[1]);
 
 	
 	//split into first array
@@ -82,7 +85,7 @@ function solve(){
 	var s = unSimply.join("");
 	s = CQ(s).simplify().toString();
 	var s1="";
-	console.log(s);
+	
 
 	for (var i = 0; i < s.length; i++) {
 		if(s[i].charCodeAt(0) != 32){
@@ -167,7 +170,6 @@ function solve(){
 		}
 	}
 
-	console.log(simply);
 	var begin = 0;
 	for (var i = 0; i < simply.length; i++) {
 		if(isNumber(simply[i]) && isLetter(simply[i+1].charCodeAt(0)) && isNumber(simply[i+2])){
@@ -186,7 +188,6 @@ function solve(){
 
 	};
 
-	console.log(simply);
 
 	var finalEq = [];
 	for(var i=0; i<simply.length; i++){
@@ -216,7 +217,6 @@ function solve(){
 	}
 
 
-	console.log(finalEq);
 	
 }
 
@@ -235,4 +235,105 @@ function isNumber(x){
 
 function isOperator(x){
 	return x=="/" || x=="+" || x=="-" || x=="*" || x=="(";
+}
+
+function simple(e){
+
+
+
+	var eq=[]
+	var unSimply = [];
+
+	
+	//split into first array
+	for(var i=0; i<e.length; i++){
+		if(!(isNumber(e[i]) || e[i]==".")){
+			eq.push(e[i]);
+		}
+
+		else{
+			var start = i;
+			while(isNumber(e[i]) || e[i]=="."){
+				i++
+			}
+			eq.push(e.substring(start,i));
+			i-=1;
+		}
+	}
+
+	e = null;
+	//end
+
+
+	//insert exponents and multiplications
+	for(var i=0; i<eq.length; i++){
+		if(i==eq.length-1){
+			unSimply.push(eq[i]);
+		}
+		else if(isLetter(eq[i].charCodeAt(0)) && isNumber(eq[i+1])){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+			unSimply.push(eq[i+1]);
+			i++;
+		}
+		else if(isNumber(eq[i]) && isLetter(eq[i+1].charCodeAt(0))){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+			unSimply.push(eq[i+1]);
+			i++;
+		}
+
+		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="^"){
+			unSimply.push(eq[i]);
+			unSimply.push("**");
+			i++;
+		}
+
+
+		else if(isNumber(eq[i]) && eq[i+1]=="^"){
+			unSimply.push(eq[i]);
+			unSimply.push("**");
+			i++;
+		}
+
+		else if(eq[i]==")"  && (isNumber(eq[i+1]) || eq[i+1]=="(" || isLetter(eq[i+1].charCodeAt(0)))){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+		}
+
+		else if(eq[i+1]=="(" && (isNumber(eq[i]) || eq[i]==")" || isLetter(eq[i].charCodeAt(0)))){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+			unSimply.push(eq[i+1]);
+			i++;
+		}
+
+		else{
+			unSimply.push(eq[i]);
+		}
+	}
+
+	eq = null;
+
+	var s = unSimply.join("");
+	s = CQ(s).simplify().toString();
+
+	var result="";
+
+	for (var i = 0; i < s.length; i++) {
+		if(s[i]=="*"){
+			if(s[i+1]=="*"){
+				result+="^";
+			}
+			else{
+				continue;
+			}
+		}
+		else{
+			result+=s[i];
+		}
+	};
+
+	console.log(result);
+
 }
