@@ -6,8 +6,9 @@ function solve(){
 	var eq=[]
 	var unSimply = [];
 	var parts = e.split("=");
-	simple(parts[0]);
-	simple(parts[1]);
+	var part1 = simple(parts[0]);
+	var part2 = simple(parts[1]);
+	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
 
 	
 	//split into first array
@@ -333,7 +334,7 @@ function simple(e){
 			result+=s[i];
 		}
 	};
-
+	return result;
 	console.log(result);
 
 }
