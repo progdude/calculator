@@ -3,7 +3,9 @@ function solve(){
 	var e = $("#equation").val().replace(" ","");
 	var eq=[]
 	var unSimply = [];
+	var power=1;
 	var parts = e.split("=");
+	console.log("whats up");
 	var part1 = simple(parts[0]);
 	var part2 = simple(parts[1]);
 	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
@@ -43,13 +45,20 @@ function solve(){
 		else if(isNumber(eq[i]) && isLetter(eq[i+1].charCodeAt(0))){
 			unSimply.push(eq[i]);
 			unSimply.push("*");
-			unSimply.push(eq[i+1]);
-			i++;
+			//unSimply.push(eq[i+1]);
+			//i++;
 		}
 
 		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="^"){
 			unSimply.push(eq[i]);
 			unSimply.push("**");
+			i++;
+		}
+
+		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="("){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+			unSimply.push("(");
 			i++;
 		}
 
@@ -361,13 +370,20 @@ function simple(e){
 		else if(isNumber(eq[i]) && isLetter(eq[i+1].charCodeAt(0))){
 			unSimply.push(eq[i]);
 			unSimply.push("*");
-			unSimply.push(eq[i+1]);
-			i++;
+			//unSimply.push(eq[i+1]);
+			//i++;
 		}
 
 		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="^"){
 			unSimply.push(eq[i]);
 			unSimply.push("**");
+			i++;
+		}
+
+		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="("){
+			unSimply.push(eq[i]);
+			unSimply.push("*");
+			unSimply.push("(");
 			i++;
 		}
 
