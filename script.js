@@ -1,14 +1,15 @@
 
 function solve(){
+	$(".ex").empty();
 	var e = $("#equation").val().replace(" ","");
 	var eq=[]
 	var unSimply = [];
 	var power=1;
 	var parts = e.split("=");
-	console.log("whats up");
+
 	var part1 = simple(parts[0]);
 	var part2 = simple(parts[1]);
-	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
 
 	
 	//split into first array
@@ -103,8 +104,8 @@ function solve(){
 	s = null;
 	unSimply = null;
 	//end
-
-	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(s1)+' = 0</span><span class="why">Combine Like Terms</span></div></div></div><hr>');
+	
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(s1)+' = 0</span><span class="why">Combine Like Terms</span></div></div></div><hr>');
 
 
 
@@ -115,7 +116,16 @@ function solve(){
 
 
 		if(s1[i]=="*"){
-			continue;
+			if(s1[i+1]=="*"){
+				if(s1[i+2]>power){
+					power=s1[i+2];
+				}
+				simply.push("^");
+				i+=2;
+			}
+			else{
+				continue;
+			}
 		}
 
 		if(!(isNumber(s1[i]) || s1[i]==".")){
@@ -131,7 +141,7 @@ function solve(){
 			i-=1;
 		}
 	};
-
+	
 	s1=null;
 	//end
 
@@ -181,8 +191,11 @@ function solve(){
 		}
 	}
 
+	
+	//account for coefficients
 	var begin = 0;
-	for (var i = 0; i < simply.length; i++) {
+	for (var i = 0; i < simply.length-1; i++) {
+		
 		if(isNumber(simply[i]) && isLetter(simply[i+1].charCodeAt(0)) && isNumber(simply[i+2])){
 			simply[i] = simply[i]*simply[i+2];
 			simply.splice(i+2,1);
@@ -227,9 +240,15 @@ function solve(){
 		}
 	}
 
+	if(power==1){
+		linear(finalEq);
+	}
 
-	linear(finalEq);
-}
+	else if(power==2){
+		quadratic(finalEq);
+	}
+
+	}
 
 
 function linear(eq){
@@ -285,7 +304,7 @@ function linear(eq){
 	var frac = ans%1==0?ans:fraction(ans);
 	var decimal = ans;
 
-	$("body").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
 
 }
 
