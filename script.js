@@ -240,6 +240,9 @@ function solve(){
 		}
 	}
 
+	console.log(finalEq);
+
+
 	if(power==1){
 		linear(finalEq);
 	}
@@ -248,8 +251,40 @@ function solve(){
 		quadratic(finalEq);
 	}
 
-	}
+}
 
+function quadratic(e){
+	var zeroSum=0;
+	var oneSum =0;
+	var twoSum =0;
+	var x;
+
+	for (var i = 0; i < e.length; i++) {
+		x=1;
+		if(isNumber(e[i])){
+			if(e[i+2]=="^"){
+				if(e[i-1]=="-"){x=-1;}
+				twoSum = e[i]*x;
+			}
+			else if(e[i+1]=="x"){
+				if(e[i-1]=="-"){x=-1;}
+				oneSum = e[i]*x;
+			}
+			else if(e[i-1]!="^"){
+				if(e[i-1]=="-"){x=-1;}
+				zeroSum = e[i]*x;
+			}
+	};
+
+	
+}
+
+	var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
+	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
+
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+
+}
 
 function linear(eq){
 	var oneSum = 0;
