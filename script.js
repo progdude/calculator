@@ -1,4 +1,9 @@
 
+
+
+
+
+
 function solve(){
 	$(".ex").empty();
 	var e = $("#equation").val().replace(" ","");
@@ -149,7 +154,7 @@ function solve(){
 		}
 	};
 	
-	s1=null;
+	//s1=null;
 	//end
 
 		//account for division signs	
@@ -250,16 +255,16 @@ function solve(){
 
 
 	if(power==1){
-		linear(finalEq);
+		linear(finalEq,s1);
 	}
 
 	else if(power==2){
-		quadratic(finalEq);
+		quadratic(finalEq,s1);
 	}
 
 }
 
-function quadratic(e){
+function quadratic(e,s1){
 	var zeroSum=0;
 	var oneSum =0;
 	var twoSum =0;
@@ -289,10 +294,17 @@ function quadratic(e){
 	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
 
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+	$(".ex").append('<div class="graph"></div><hr>');
 
+	functionPlot({
+  target: '.graph',
+  data: [{
+    fn: format(s1),
+  }]
+});
 }
 
-function linear(eq){
+function linear(eq,s1){
 	var oneSum = 0;
 	var zeroSum = 0;
 	var sign = 1;
@@ -346,8 +358,17 @@ function linear(eq){
 	var decimal = ans;
 
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
+	$(".ex").append('<div class="graph"></div><hr>');
+functionPlot({
+  target: '.graph',
+  data: [{
+    fn: s1,
+  }]
+});
 
 }
+
+
 
 
 
