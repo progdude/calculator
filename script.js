@@ -299,7 +299,7 @@ function quadratic(e,s1){
 	functionPlot({
   target: '.graph',
   data: [{
-    fn: format(s1),
+    fn: format1(s1),
   }]
 });
 }
@@ -501,12 +501,32 @@ function simple(e){
 
 }
 
-function format(s){
+function format1(s){
 	var result="";
 		for (var i = 0; i < s.length; i++) {
 		if(s[i]=="*"){
 			if(s[i+1]=="*"){
 				result+="^";
+			}
+			else{
+				continue;
+			}
+		}
+		else{
+			result+=s[i];
+		}
+	};
+	return result;
+}
+
+function format(s){
+	console.log("does this work?");
+	var result="";
+		for (var i = 0; i < s.length; i++) {
+		if(s[i]=="*"){
+			if(s[i+1]=="*"){
+				result+="<sup>"+s[i+2]+"</sup>";
+				i+=2;
 			}
 			else{
 				continue;
