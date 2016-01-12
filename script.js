@@ -7,8 +7,15 @@ function solve(){
 	var power=1;
 	var parts = e.split("=");
 
+
 	var part1 = simple(parts[0]);
-	var part2 = simple(parts[1]);
+	if(parts[1]!=undefined){
+		var part2 = simple(parts[1]);
+	}
+	else{
+		part2=0;
+	}
+
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
 
 	
@@ -240,7 +247,6 @@ function solve(){
 		}
 	}
 
-	console.log(finalEq);
 
 
 	if(power==1){
