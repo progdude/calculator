@@ -1,9 +1,4 @@
 
-
-
-
-
-
 function solve(){
 	$(".ex").empty();
 	var e = $("#equation").val().replace(" ","");
@@ -520,9 +515,9 @@ function format1(s){
 }
 
 function format(s){
-	console.log(s);
 	var result="";
 		for (var i = 0; i < s.length; i++) {
+		
 		if(s[i]=="*"){
 			if(s[i+1]=="*"){
 				result+="<sup>"+s[i+2]+"</sup>";
@@ -532,9 +527,36 @@ function format(s){
 				continue;
 			}
 		}
+
+		else if(s[i]=="/"){
+			if(s[i-1]==")"){
+				var string = "";
+				var temp = i-2;
+				while(s[temp]!="("){
+					if(s[temp]=="*"){
+						temp--;
+						continue;
+					}
+					string+=s[temp];
+					temp--;
+				}
+				result = result.replace("("+reverseString(string)+")","<sup>"+string+"</sup>&frasl;");
+			}
+
+			if(s[i+1]=="("){
+				var string = "";
+				var
+			}
+		}
+
 		else{
 			result+=s[i];
 		}
 	};
 	return result;
+}
+
+
+function reverseString(str) {
+    return str.split('').reverse().join('');
 }
