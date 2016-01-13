@@ -520,7 +520,7 @@ function format1(s){
 }
 
 function format(s){
-	console.log("does this work?");
+	console.log(s);
 	var result="";
 		for (var i = 0; i < s.length; i++) {
 		if(s[i]=="*"){
