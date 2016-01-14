@@ -151,7 +151,7 @@ function solve(){
 	
 	//s1=null;
 	//end
-
+	
 		//account for division signs	
 	for(var j=0; j<simply.length-1; j++){
 
@@ -180,9 +180,11 @@ function solve(){
 
 	}//end
 
+	
 
 	for (var i = 0; i < simply.length; i++) {
 		if(!(isNumber(simply[i]) || simply[i]==".")){
+			
 			if(isLetter(simply[i].charCodeAt(0))){
 				if(isOperator(simply[i-1])){
 					simply.splice(i,0,1);
@@ -348,9 +350,14 @@ function linear(eq,s1){
 
 	zeroSum*=-1;
 	var ans = zeroSum/oneSum;
-
+	if(zeroSum==0){
+		var frac = 0;
+		var decimal = 0;
+	}
+	else{
 	var frac = ans%1==0?ans:fraction(ans);
 	var decimal = ans;
+	}	
 
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
@@ -529,6 +536,7 @@ function format(s){
 		}
 
 		else if(s[i]=="/"){
+
 			if(s[i-1]==")"){
 				var string = "";
 				var temp = i-2;
@@ -540,13 +548,25 @@ function format(s){
 					string+=s[temp];
 					temp--;
 				}
-				result = result.replace("("+reverseString(string)+")","<sup>"+string+"</sup>&frasl;");
+				var t = reverseString(string);
+				result = result.replace("("+t+")","<sup>"+t+"</sup>&frasl; ");
+				
 			}
 
-			if(s[i+1]=="("){
-				var string = "";
-				var
+			else{
+				var string="";
+				var temp = i-1;
+				while(!isOperator(s[temp]) && temp>0){
+					if(s[temp]=="*"){
+						temp--;
+						continue;
+					}
+					string+=s[temp];
+					temp--;
+				}
+				result.splice()
 			}
+			
 		}
 
 		else{
@@ -560,3 +580,7 @@ function format(s){
 function reverseString(str) {
     return str.split('').reverse().join('');
 }
+
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};
