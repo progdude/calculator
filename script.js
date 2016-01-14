@@ -522,6 +522,7 @@ function format1(s){
 }
 
 function format(s){
+	console.log(s);
 	var result="";
 		for (var i = 0; i < s.length; i++) {
 		
@@ -556,7 +557,7 @@ function format(s){
 			else{
 				var string="";
 				var temp = i-1;
-				while(!isOperator(s[temp]) && temp>0){
+				while(!isOperator(s[temp]) && temp>=0){
 					if(s[temp]=="*"){
 						temp--;
 						continue;
@@ -564,12 +565,14 @@ function format(s){
 					string+=s[temp];
 					temp--;
 				}
-				result.splice()
+				console.log(result+"  "+temp);
+				console.log(string);
+				result = result.splice(temp+1,string.length,"<sup>"+reverseString(string)+"</sup>&frasl; ")
 			}
 			
 		}
 
-		else{
+		else if(s[i]!=" "){
 			result+=s[i];
 		}
 	};
