@@ -1,4 +1,6 @@
 
+
+
 function solve(){
 	$(".ex").empty();
 	var e = $("#equation").val().replace(" ","");
@@ -359,7 +361,7 @@ function linear(eq,s1){
 	var decimal = ans;
 	}	
 
-	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(frac)+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(frac.toString())+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 functionPlot({
   target: '.graph',
