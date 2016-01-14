@@ -359,7 +359,7 @@ function linear(eq,s1){
 	var decimal = ans;
 	}	
 
-	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+format(frac)+' or '+decimal.toFixed(2)+'</span><span class="why">Solve for Variable</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 functionPlot({
   target: '.graph',
@@ -522,7 +522,7 @@ function format1(s){
 }
 
 function format(s){
-	console.log(s);
+	
 	var result="";
 		for (var i = 0; i < s.length; i++) {
 		
@@ -565,10 +565,18 @@ function format(s){
 					string+=s[temp];
 					temp--;
 				}
-				console.log(result+"  "+temp);
-				console.log(string);
 				result = result.splice(temp+1,string.length,"<sup>"+reverseString(string)+"</sup>&frasl; ")
 			}
+
+			var denom = "";
+			var Dtemp = i+1;
+			while((!isOperator(s[Dtemp]) || Dtemp==i+1) && (Dtemp<=s.length-1)){
+				if(s[Dtemp]=="*"){Dtemp++; continue;}
+				denom+=s[Dtemp];
+				Dtemp++;
+			}
+			result+="<sub>"+denom+"</sub> "
+			i+=denom.length;
 			
 		}
 
