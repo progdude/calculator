@@ -293,11 +293,11 @@ function quadratic(e,s1){
 
 	var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
 	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
+	var b = (oneSum<0)?oneSum*-1:oneSum;
 	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><sup style="text-decoration:underline;">-'+oneSum +'&#xB1; &radic;<span style="text-decoration:overline;">'+oneSum+'<sup>2</sup>-4('+twoSum+')('+zeroSum+')</span></sup>&frasl;<sub>2('+twoSum+')</sub></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
-	$(".ex").append('<math display="block"> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+oneSum+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow> <msup><mi>'+oneSum+'</mi><mn>2</mn></msup><mo>&#x2212;</mo><mn>4</mn><mi>'+twoSum+'</mi><mi>'+zeroSum+'</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mn>2</mn><mi>'+twoSum+'</mi> </mrow> </mfrac> </mrow> </math>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><math> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+b+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow> <msup><mi>'+oneSum+'</mi><mn>2</mn></msup><mo>&#x2212;</mo><mn>4</mn><mi>('+twoSum+')</mi><mi>('+zeroSum+')</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mn>2</mn><mi>('+twoSum+')</mi> </mrow> </mfrac> </mrow> </math></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"MathOutput"]);
-	
-	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Solution</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 
 	functionPlot({
