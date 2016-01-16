@@ -2,7 +2,9 @@
 
 
 function solve(){
+
 	$(".ex").empty();
+
 	var e = $("#equation").val().replace(" ","");
 	var eq=[]
 	var unSimply = [];
@@ -20,7 +22,6 @@ function solve(){
 
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+part1+' = '+part2+'</span><span class="why">Simplify Each Side</span></div></div></div><hr>');
 
-	
 	//split into first array
 	for(var i=0; i<e.length; i++){
 		if(!(isNumber(e[i]) || e[i]==".")){
@@ -263,6 +264,7 @@ function solve(){
 
 }
 
+
 function quadratic(e,s1){
 	var zeroSum=0;
 	var oneSum =0;
@@ -291,7 +293,10 @@ function quadratic(e,s1){
 
 	var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
 	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
-	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><sup style="text-decoration:underline;">-'+oneSum +'&#xB1; &radic;<span style="text-decoration:overline;">'+oneSum+'<sup>2</sup>-4('+twoSum+')('+zeroSum+')</span></sup></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><sup style="text-decoration:underline;">-'+oneSum +'&#xB1; &radic;<span style="text-decoration:overline;">'+oneSum+'<sup>2</sup>-4('+twoSum+')('+zeroSum+')</span></sup>&frasl;<sub>2('+twoSum+')</sub></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+	$(".ex").append('<math display="block"> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+oneSum+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow> <msup><mi>'+oneSum+'</mi><mn>2</mn></msup><mo>&#x2212;</mo><mn>4</mn><mi>'+twoSum+'</mi><mi>'+zeroSum+'</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mn>2</mn><mi>'+twoSum+'</mi> </mrow> </mfrac> </mrow> </math>');
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"MathOutput"]);
+	
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 
