@@ -525,12 +525,19 @@ function format1(s){
 
 function format(s){
 	
+
 	var result="";
 		for (var i = 0; i < s.length; i++) {
 		
 		if(s[i]=="*"){
 			if(s[i+1]=="*"){
 				result+="<sup>"+s[i+2]+"</sup>";
+				//console.log(s[i]+" "+s[i+1]+" "+s[i+2]);
+				s= s.splice(i,2,"<sup>");
+				//console.log(s[i+3]+" "+s[i+4]+" "+s[i+5]);
+				s = s.splice(i+6,0,"</sup>")
+				console.log(s);
+				//console.log(s[i]+" "+s[i+1]+" "+s[i+2]);
 				i+=2;
 			}
 			else{
