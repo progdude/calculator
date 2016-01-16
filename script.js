@@ -291,7 +291,7 @@ function quadratic(e,s1){
 
 	var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
 	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
-
+	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><sup style="text-decoration:underline;">-'+oneSum +'&#xB1; &radic;<span style="text-decoration:overline;">'+oneSum+'<sup>2</sup>-4('+twoSum+')('+zeroSum+')</span></sup></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 
@@ -455,8 +455,6 @@ function simple(e){
 		else if(isNumber(eq[i]) && isLetter(eq[i+1].charCodeAt(0))){
 			unSimply.push(eq[i]);
 			unSimply.push("*");
-			//unSimply.push(eq[i+1]);
-			//i++;
 		}
 
 		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="^"){
