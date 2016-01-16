@@ -532,12 +532,6 @@ function format(s){
 		if(s[i]=="*"){
 			if(s[i+1]=="*"){
 				result+="<sup>"+s[i+2]+"</sup>";
-				//console.log(s[i]+" "+s[i+1]+" "+s[i+2]);
-				s= s.splice(i,2,"<sup>");
-				//console.log(s[i+3]+" "+s[i+4]+" "+s[i+5]);
-				s = s.splice(i+6,0,"</sup>")
-				console.log(s);
-				//console.log(s[i]+" "+s[i+1]+" "+s[i+2]);
 				i+=2;
 			}
 			else{
@@ -559,6 +553,17 @@ function format(s){
 					temp--;
 				}
 				var t = reverseString(string);
+				var t1 = t;
+
+				
+				for(var j=0; j<t.length-1; j++){
+					if(isLetter(t[j].charCodeAt(0)) && isNumber(t[j+1])){
+						t1=t.splice(j+1,0, "<sup>");
+						t1 = t1.splice(j+7,0,"</sup>");
+						result = result.replace("("+t1+")","<sup>"+t1+"</sup>&frasl; ");
+					}
+				}
+	
 				result = result.replace("("+t+")","<sup>"+t+"</sup>&frasl; ");
 				
 			}
