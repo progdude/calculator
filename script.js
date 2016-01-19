@@ -56,8 +56,6 @@ function solve(){
 		else if(isNumber(eq[i]) && isLetter(eq[i+1].charCodeAt(0))){
 			unSimply.push(eq[i]);
 			unSimply.push("*");
-			//unSimply.push(eq[i+1]);
-			//i++;
 		}
 
 		else if(isLetter(eq[i].charCodeAt(0)) && eq[i+1]=="^"){
@@ -102,6 +100,7 @@ function solve(){
 
 	//simplify!!!!!
 	var s = unSimply.join("");
+	console.log(unSimply.toString());
 	s = CQ(s).simplify().toString();
 	var s1="";
 		
@@ -609,6 +608,94 @@ function reverseString(str) {
     return str.split('').reverse().join('');
 }
 
+
 String.prototype.splice = function(idx, rem, str) {
     return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
 };
+
+
+/*Change starts here*/
+
+Array.prototype.clean = function() {
+    for(var i = 0; i < this.length; i++) {
+        if(this[i] === "") {
+            this.splice(i, 1);
+        }
+    }
+    return this;
+};
+
+
+function swag(infix) {
+        var outputQueue = "";
+        var operatorStack = [];
+        var operators = {
+            "^": {
+                precedence: 4,
+                associativity: "Right"
+            },
+            "/": {
+                precedence: 3,
+                associativity: "Left"
+            },
+            "*": {
+                precedence: 3,
+                associativity: "Left"
+            },
+            "+": {
+                precedence: 2,
+                associativity: "Left"
+            },
+            "-": {
+                precedence: 2,
+                associativity: "Left"
+            }
+        };
+        
+        infix = infix.replace(/\s+/g, "");
+  
+        infix = infix.split("").clean();
+        console.log(infix);
+  
+        for(var i = 0; i < infix.length; i++) {
+            var token = infix[i];
+            if(isNumber(token)) {
+                
+              if(isLetter(infix[i+1].charCodeAt(0))){
+                outputQueue += token;
+              }
+              
+              else{
+                outputQueue+=token+" ";
+              }
+              
+            }
+            
+            else if(isLetter(token.charCodeAt(0))){
+                outputQueue+=token+" ";
+            }
+          else if("^*/+-".indexOf(token) !== -1) {
+                var o1 = token;
+                var o2 = operatorStack[operatorStack.length - 1];
+                while("^*/+-".indexOf(o2) !== -1 && ((operators[o1].associativity === "Left" && operators[o1].precedence <= operators[o2].precedence) || (operators[o1].associativity === "Right" && operators[o1].precedence < operators[o2].precedence))) {
+                    outputQueue += operatorStack.pop() + " ";
+                    o2 = operatorStack[operatorStack.length - 1];
+                }
+                operatorStack.push(o1);
+            } else if(token === "(") {
+                operatorStack.push(token);
+            } else if(token === ")") {
+                while(operatorStack[operatorStack.length - 1] !== "(") {
+                    outputQueue += operatorStack.pop() + " ";
+                }
+                operatorStack.pop();
+            }
+        }
+        while(operatorStack.length > 0) {
+            outputQueue += operatorStack.pop() + " ";
+        }
+        return outputQueue;
+    }
+
+console.log(swag("(6+5)*(4x+9*(3x+5)"));
+
