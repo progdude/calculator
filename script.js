@@ -100,7 +100,6 @@ function solve(){
 
 	//simplify!!!!!
 	var s = unSimply.join("");
-	console.log(unSimply.toString());
 	s = CQ(s).simplify().toString();
 	var s1="";
 		
@@ -290,13 +289,22 @@ function quadratic(e,s1){
 	
 }
 
-	var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
-	var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
+	//var x1=-oneSum/2/twoSum+Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
+	//var x2=-oneSum/2/twoSum-Math.pow(Math.pow(oneSum,2)-4*twoSum*zeroSum,0.5)/2/twoSum;
 	var b = (oneSum<0)?oneSum*-1:oneSum;
 	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><sup style="text-decoration:underline;">-'+oneSum +'&#xB1; &radic;<span style="text-decoration:overline;">'+oneSum+'<sup>2</sup>-4('+twoSum+')('+zeroSum+')</span></sup>&frasl;<sub>2('+twoSum+')</sub></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><math> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+b+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow> <msup><mi>'+oneSum+'</mi><mn>2</mn></msup><mo>&#x2212;</mo><mn>4</mn><mi>('+twoSum+')</mi><mi>('+zeroSum+')</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mn>2</mn><mi>('+twoSum+')</mi> </mrow> </mfrac> </mrow> </math></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
+		var discriminant = Math.pow(oneSum,2)-4&twoSum*zeroSum;
+	if(isPerfectSquare(discriminant)){
+		var numerator1 = -oneSum+Math.pow(discriminant,.5);
+		var numerator2 = -oneSum-Math.pow(discriminant,.5);
+		var denominator = 2*twoSum;
+		$(".ex").append('<math> <mrow> <mi>x</mi><mo>=</mo> <mfrac><mrow><mo></mo><mi>'+numerator1+'</mi><mo></mo> </mrow><mrow><mi>('+denominator+')</mi> </mrow> </mfrac> </mrow> </math> or <math> <mrow><mfrac><mrow><mo></mo><mi>'+numerator2+'</mi><mo></mo> </mrow><mrow><mi>('+denominator+')</mi> </mrow> </mfrac> </mrow> </math>')
+	}
+
+	
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"MathOutput"]);
-	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Solution</span></div></div></div><hr>');
+	//$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+x1.toFixed(2)+' or '+x2.toFixed(2)+'</span><span class="why">Solution</span></div></div></div><hr>');
 	$(".ex").append('<div class="graph"></div><hr>');
 
 	functionPlot({
@@ -385,12 +393,17 @@ function isLetter(x) {
 }
 
 function isNumber(x){
-	return !isNaN(parseInt(x));
+	return x==parseInt(x);
 }
 
 function isOperator(x){
 	return x=="/" || x=="+" || x=="-" || x=="*" || x=="(";
 }
+
+function isPerfectSquare(x){
+	return Math.sqrt(x)%1==0;
+}
+
 
 
 function fraction(x) {
@@ -626,7 +639,7 @@ Array.prototype.clean = function() {
 };
 
 
-function swag(infix) {
+function infixToPostfix(infix) {
         var outputQueue = "";
         var operatorStack = [];
         var operators = {
@@ -655,7 +668,7 @@ function swag(infix) {
         infix = infix.replace(/\s+/g, "");
   
         infix = infix.split("").clean();
-        console.log(infix);
+        
   
         for(var i = 0; i < infix.length; i++) {
             var token = infix[i];
@@ -697,5 +710,36 @@ function swag(infix) {
         return outputQueue;
     }
 
-console.log(swag("(6+5)*(4x+9*(3x+5)"));
+    function evalPostfix(postfix) {
+    	var equationStack = [];
+        var resultStack = [];
+        postfix = postfix.split(" ");
+        console.log(postfix);
+        for(var i = 0; i < postfix.length; i++) {
+            if(isNumber(postfix[i])) {
+                resultStack.push(postfix[i]);
+            } 
+            else {
+                var a = resultStack.pop();
+                var b = resultStack.pop();
+                if(postfix[i] === "+") {
+                    resultStack.push(parseInt(a) + parseInt(b));
+                } else if(postfix[i] === "-") {
+                    resultStack.push(parseInt(b) - parseInt(a));
+                } else if(postfix[i] === "*") {
+                    resultStack.push(parseInt(a) * parseInt(b));
+                } else if(postfix[i] === "/") {
+                    resultStack.push(parseInt(b) / parseInt(a));
+                } else if(postfix[i] === "^") {
+                    resultStack.push(Math.pow(parseInt(b), parseInt(a)));
+                }
+            }
+        }
+        if(resultStack.length > 1) {
+            return "error";
+        } else {
+            return resultStack.pop();
+        }
+    }
+
 
