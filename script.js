@@ -296,18 +296,34 @@ function quadratic(e,s1){
 	$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><math> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+b+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow> <msup><mi>'+oneSum+'</mi><mn>2</mn></msup><mo>&#x2212;</mo><mn>4</mn><mi>('+twoSum+')</mi><mi>('+zeroSum+')</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mn>2</mn><mi>('+twoSum+')</mi> </mrow> </mfrac> </mrow> </math></span><span class="why">Use Quadratic Equation</span></div></div></div><hr>');
 		var discriminant = Math.pow(oneSum,2)-4*twoSum*zeroSum;
 
+
+		if(discriminant>=0){
 	if(isPerfectSquare(discriminant)){
 		var numerator1 = -oneSum+Math.pow(discriminant,.5);
 		var numerator2 = -oneSum-Math.pow(discriminant,.5);
 		var denominator = 2*twoSum;
 		var frac1 = fraction(numerator1/denominator);
 		var frac2 = fraction(numerator2/denominator);
-		//console.log(fraction(numerator1/denominator));
 		$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac1+' or '+frac2+'</span><span class="why">Solution</span></div></div></div><hr>');
 	}
 	else{
 		$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><math> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+b+'</mi><mo>&#x00B1;</mo> <msqrt> <mrow><mi>('+discriminant+')</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mi>('+2*twoSum+')</mi> </mrow> </mfrac> </mrow> </math></span><span class="why">Solution</span></div></div></div><hr>');
 	}
+}
+else{
+	if(isPerfectSquare(discriminant*-1)){
+		var numerator1 = -oneSum+Math.pow(discriminant*-1,.5);
+		var numerator2 = -oneSum-Math.pow(discriminant*-1,.5);
+		var denominator = 2*twoSum;
+		var frac1 = fraction(numerator1/denominator);
+		var frac2 = fraction(numerator2/denominator);
+		$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ">'+frac1+'<var>i</var> or '+frac2+'<var>i</var></span><span class="why">Solution</span></div></div></div><hr>');
+	}
+	else{
+		$(".ex").append('<div class="row"><div class="col s10 offset-s1 block"><div class="explain"><span class="equ"><math> <mrow> <mi>x</mi><mo>=</mo> <mfrac> <!-- Start Numerator --> <mrow><mo>&#x2212;</mo><mi>'+b+'</mi><mo>&#x00B1;i</mo> <msqrt> <mrow><mi>('+discriminant*-1+')</mi> </mrow> </msqrt> </mrow> <!-- Start Denominator --> <mrow> <mi>('+2*twoSum+')</mi> </mrow> </mfrac> </mrow> </math></span><span class="why">Solution</span></div></div></div><hr>');
+	}
+
+}
 
 	
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"MathOutput"]);
