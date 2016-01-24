@@ -3,9 +3,20 @@
 
 function solve(){
 
+
+
+
 	$(".ex").empty();
 
 	var e = $("#equation").val().replace(" ","");
+	var diff = false;
+	var differentiate = e.substring(0,13);
+
+	if(differentiate =="Differentiate" || differentiate=="differentiate"){
+		e = e.splice(0,13,"");
+		diff=true;
+	}
+
 	var eq=[]
 	var unSimply = [];
 	var power=1;
@@ -250,9 +261,11 @@ function solve(){
 		}
 	}
 
+	if(diff){
+		differn(finalEq,s1);
+	}
 
-
-	if(power==1){
+	else if(power==1){
 		linear(finalEq,s1);
 	}
 
